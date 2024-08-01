@@ -22,27 +22,49 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { signUpFormSchema } from "./form";
 import { useForm } from "react-hook-form";
-import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export default function SignupForm({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
+export default function SignupForm() {
+  const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const signUpForm = useForm<InferType<typeof signUpFormSchema>>({
     resolver: yupResolver(signUpFormSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
   const signup = async (values: InferType<typeof signUpFormSchema>) => {
-    //TODO: Implement signup
-  };
+    setPending(true);
+    setTimeout(async () => {
+      try {
+        const response = await fetch("http://localhost:3001/user/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
-  const { pending } = useFormStatus();
+        if (!response.ok) {
+          throw new Error("Signup failed");
+        }
+
+        const data = await response.json();
+        localStorage.setItem("authToken", data.access_token);
+        router.push("/todo");
+      } catch (error: any) {
+        setError(error?.message);
+      } finally {
+        setPending(false);
+      }
+    }, 1500);
+  };
 
   return (
     <div className="flex flex-grow items-center justify-center">
@@ -60,14 +82,14 @@ export default function SignupForm({
                 <div className="grid gap-2">
                   <FormField
                     control={signUpForm.control}
-                    name="email"
+                    name="username"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Username or email</FormLabel>
                         <FormControl>
                           <Input
-                            type="email"
-                            placeholder="you@example.com"
+                            type="username"
+                            placeholder="username or email"
                             required
                             {...field}
                           />
@@ -103,11 +125,7 @@ export default function SignupForm({
                   Sign in
                 </Link>
               </div>
-              {searchParams?.message && (
-                <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
-                  {searchParams.message}
-                </p>
-              )}
+              {error && <p style={{ color: "red" }}>{error}</p>}
             </form>
           </Form>
         </CardContent>

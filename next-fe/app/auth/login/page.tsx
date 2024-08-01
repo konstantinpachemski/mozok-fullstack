@@ -23,21 +23,50 @@ import Link from "next/link";
 import { loginFormSchema } from "./form";
 import { useForm } from "react-hook-form";
 import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Login() {
+  const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const loginForm = useForm<InferType<typeof loginFormSchema>>({
     resolver: yupResolver(loginFormSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
-  const { pending } = useFormStatus();
-
   const login = async (values: InferType<typeof loginFormSchema>) => {
-    //TODO: Implement login
+    setPending(true);
+    // setTimeout(async () => {
+    try {
+      const response = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      console.log(JSON.stringify(values));
+
+      if (!response.ok) {
+        throw new Error("Wrong username or password");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("authToken", data.access_token);
+      router.push("/todo");
+    } catch (error: any) {
+      setError(error?.message);
+    } finally {
+      setPending(false);
+    }
+    // }, 1500);
   };
 
   return (
@@ -56,14 +85,14 @@ export default function Login() {
                 <div className="grid gap-2">
                   <FormField
                     control={loginForm.control}
-                    name="email"
+                    name="username"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Username or email</FormLabel>
                         <FormControl>
                           <Input
-                            type="email"
-                            placeholder="you@example.com"
+                            type="username"
+                            placeholder="username or you@example.com"
                             required
                             {...field}
                           />
@@ -94,6 +123,7 @@ export default function Login() {
                 <Button type="submit" className="w-full">
                   {pending ? "Logging in..." : "Login"}
                 </Button>
+                {error && <p style={{ color: "red" }}>{error}</p>}
               </div>
               <div className="mt-4 text-center text-sm">
                 Don&apos;t have an account?{" "}

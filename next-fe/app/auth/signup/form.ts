@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 
 export const signUpFormSchema = object({
-  email: string()
+  username: string()
     .min(6, { message: 'Username must be at least 6 characters.' })
     .max(50, { message: 'Username must be at less then 50 characters.' })
     .required('Username is required.'),
