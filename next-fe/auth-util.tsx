@@ -13,13 +13,14 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
           router.push("/auth/login");
         }
 
-        const res = await fetch("http://localhost:3001/auth/verify", {
+        const res = await fetch("http://localhost:3001/auth/validate-token", {
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (res.status === 401) {
+        if (!res.ok) {
           router.push("/auth/login");
         }
       };
