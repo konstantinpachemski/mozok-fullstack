@@ -1,0 +1,20 @@
+{
+  "name": "mozok-fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"yarn start:fe\" \"yarn start:be\"",
+    "start:fe": "cd next-fe && yarn dev",
+    "start:be": "cd nest-be && yarn start:dev",
+    "setup": "concurrently \"yarn setup:fe\" \"yarn setup:be\"",
+    "setup:fe": "cd next-fe && yarn",
+    "setup:be": "cd nest-be && yarn"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
