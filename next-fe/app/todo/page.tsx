@@ -11,12 +11,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { InferType, boolean, object, string } from "yup";
-import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import withAuth from "../../auth-util";
+import { useState } from "react";
+import withAuth from "../../authhoc-wrapper";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface TodoItem {
@@ -52,6 +52,7 @@ function Todo() {
     form.reset();
   };
 
+  //TODO: Implement editTodo
   const editTodo = (title: string) => {};
 
   const removeTodo = (title: string) => {
@@ -157,7 +158,6 @@ function Item({
   toggleTodo: any;
   removeTodo: any;
 }) {
-  const title = item.title;
   return (
     <div className="w-full justify-between flex py-2">
       <div className="w-full flex gap-4 items-center">

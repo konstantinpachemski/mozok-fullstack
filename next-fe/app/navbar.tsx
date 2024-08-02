@@ -11,28 +11,10 @@ export const Navbar = () => {
           </Link>
           <nav className="hidden gap-4 md:flex">
             <Link
-              href="/"
+              href="/todo"
               className="flex items-center text-sm transition-colors hover:underline"
             >
-              Home
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center text-sm transition-colors hover:underline"
-            >
-              About
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center text-sm transition-colors hover:underline"
-            >
-              Services
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center text-sm transition-colors hover:underline"
-            >
-              Contact
+              Todos
             </Link>
           </nav>
 
