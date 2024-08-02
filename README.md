@@ -56,6 +56,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
 ```
 
 Finaly, create ```.env``` file in root of nest-be and store your ```JWT_SECRET```: (there's ```.env-example```)
+
 _/nest-be/.env_
 ```plaintext
 JWT_SECRET=
