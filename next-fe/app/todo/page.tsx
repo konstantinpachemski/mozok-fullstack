@@ -52,8 +52,13 @@ function Todo() {
     form.reset();
   };
 
-  //TODO: Implement editTodo
-  const editTodo = (title: string) => {};
+  const editTodo = (title: string, index: number) => {
+    setTodos((prev: TodoItem[]) => {
+      const result = [...prev];
+      result[index] = { ...result[index], title };
+      return result;
+    });
+  };
 
   const removeTodo = (title: string) => {
     setTodos(todos.filter((item) => item.title !== title));
@@ -75,7 +80,7 @@ function Todo() {
     <div className="container flex flex-grow items-center justify-center">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Todo</CardTitle>
+          <CardTitle className="text-2xl text-center">Todo</CardTitle>
         </CardHeader>
         <CardContent>
           <TodoHero
@@ -100,7 +105,12 @@ function Todo() {
                               required
                               {...field}
                             />
-                            <Button type="submit">Add</Button>
+                            <Button
+                              className="hover:scale-105 transition bg-green-600 hover:bg-green-500"
+                              type="submit"
+                            >
+                              Add
+                            </Button>
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -115,12 +125,36 @@ function Todo() {
             <ul>
               {todos && todos.length > 0 ? (
                 todos?.map((item, index) => (
-                  <Item
-                    key={index}
-                    item={item}
-                    toggleTodo={toggleTodo}
-                    removeTodo={removeTodo}
-                  />
+                  <div key={index} className="w-full justify-between flex py-2">
+                    <div className="w-full flex gap-4 items-center">
+                      <div className="w-full flex items-center space-x-2 pr-4">
+                        <Button
+                          onClick={() => toggleTodo(item.title)}
+                          variant="ghost"
+                          size="icon"
+                          className="hover:scale-110 transition"
+                        >
+                          {item.completed ? <CircleCheckBig /> : <Circle />}
+                        </Button>
+                        <Input
+                          value={item.title}
+                          className="w-full"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            editTodo(e.target.value, index)
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => removeTodo(item.title)}
+                        variant="destructive"
+                        className="hover:scale-105 transition"
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
                 ))
               ) : (
                 <p>Seems lonely in here, what are you up to?</p>
@@ -141,44 +175,10 @@ function TodoHero({
   total_todos: number;
 }) {
   return (
-    <div className="font-medium pb-4">
-      <p>
+    <div className="flex justify-center font-medium pb-4">
+      <p className="hover:scale-110 transition">
         Tasks completed: {todos_completed}/{total_todos}
       </p>
-    </div>
-  );
-}
-
-function Item({
-  item,
-  toggleTodo,
-  removeTodo,
-}: {
-  item: TodoItem;
-  toggleTodo: any;
-  removeTodo: any;
-}) {
-  return (
-    <div className="w-full justify-between flex py-2">
-      <div className="w-full flex gap-4 items-center">
-        <div className="w-full flex items-center space-x-2 pr-4">
-          <Button
-            onClick={() => toggleTodo(item.title)}
-            variant="ghost"
-            size="icon"
-          >
-            {item.completed ? <CircleCheckBig /> : <Circle />}
-          </Button>
-          <Input readOnly value={item.title} className="w-full" />
-        </div>
-      </div>
-
-      <div className="flex gap-2">
-        <Button variant="secondary">Edit</Button>
-        <Button onClick={() => removeTodo(item.title)} variant="destructive">
-          Delete
-        </Button>
-      </div>
     </div>
   );
 }

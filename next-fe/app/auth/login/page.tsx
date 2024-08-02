@@ -22,7 +22,6 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { loginFormSchema } from "./form";
 import { useForm } from "react-hook-form";
-import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,39 +41,37 @@ export default function Login() {
 
   const login = async (values: InferType<typeof loginFormSchema>) => {
     setPending(true);
-    // setTimeout(async () => {
-    try {
-      const response = await fetch("http://localhost:3001/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+    setTimeout(async () => {
+      try {
+        const response = await fetch("http://localhost:3001/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
 
-      console.log(JSON.stringify(values));
+        if (!response.ok) {
+          throw new Error("Wrong username or password");
+        }
 
-      if (!response.ok) {
-        throw new Error("Wrong username or password");
+        const data = await response.json();
+        localStorage.setItem("authToken", data.access_token);
+        router.push("/todo");
+      } catch (error: any) {
+        setError(error?.message);
+      } finally {
+        setPending(false);
       }
-
-      const data = await response.json();
-      localStorage.setItem("authToken", data.access_token);
-      router.push("/todo");
-    } catch (error: any) {
-      setError(error?.message);
-    } finally {
-      setPending(false);
-    }
-    // }, 1500);
+    }, 1500);
   };
 
   return (
     <div className="flex flex-grow items-center justify-center">
-      <Card>
+      <Card className="min-w-96">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl text-center">Login</CardTitle>
+          <CardDescription className="text-center">
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
@@ -108,10 +105,7 @@ export default function Login() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <div className="flex items-center">
-                          <FormLabel>Password</FormLabel>
-                        </div>
-
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
                           <Input type="password" required {...field} />
                         </FormControl>
@@ -120,7 +114,10 @@ export default function Login() {
                     )}
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full hover:scale-105 transition bg-green-600 hover:bg-green-500"
+                >
                   {pending ? "Logging in..." : "Login"}
                 </Button>
                 {error && <p style={{ color: "red" }}>{error}</p>}

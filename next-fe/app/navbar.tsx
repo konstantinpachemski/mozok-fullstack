@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const Navbar = () => {
@@ -5,14 +6,16 @@ export const Navbar = () => {
     <nav className="inset-x-0 top-0 z-50 bg-white shadow-sm dark:bg-gray-950/90">
       <div className="container mx-auto w-full max-w-7xl px-4">
         <div className="flex h-14 items-center justify-between font-semibold">
-          <Link href="/" className="bold flex items-center">
+          <Link
+            href="/"
+            className="bold flex items-center hover:scale-110 transition"
+          >
             Mozok
-            <span className="sr-only">Acme Inc</span>
           </Link>
-          <nav className="hidden gap-4 md:flex">
+          <nav className="gap-4">
             <Link
               href="/todo"
-              className="flex items-center text-sm transition-colors hover:underline"
+              className="flex items-center text-md hover:scale-110 transition"
             >
               Todos
             </Link>
@@ -20,12 +23,19 @@ export const Navbar = () => {
 
           <div className="flex items-center gap-4">
             <>
-              <button>
-                <Link href="/auth/login">Login</Link>
-              </button>
-              <button>
-                <Link href="/auth/signup">Sign up</Link>
-              </button>
+              <Link
+                href="/auth/login"
+                className="flex items-center text-md hover:scale-110 transition"
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/auth/signup"
+                className="flex items-center text-md hover:scale-110 transition"
+              >
+                Sign up
+              </Link>
             </>
           </div>
         </div>

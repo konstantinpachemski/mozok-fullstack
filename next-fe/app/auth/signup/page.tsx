@@ -68,10 +68,10 @@ export default function SignupForm() {
 
   return (
     <div className="flex flex-grow items-center justify-center">
-      <Card>
+      <Card className="min-w-96">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
+          <CardDescription className="text-center">
             Enter your information to create an account
           </CardDescription>
         </CardHeader>
@@ -115,7 +115,10 @@ export default function SignupForm() {
                     )}
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full hover:scale-105 transition bg-green-600 hover:bg-green-500"
+                >
                   {pending ? "Signing up..." : "Create an account"}
                 </Button>
               </div>
