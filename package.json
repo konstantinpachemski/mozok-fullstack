@@ -5,10 +5,11 @@
   "scripts": {
     "start": "concurrently \"yarn start:fe\" \"yarn start:be\"",
     "start:fe": "cd next-fe && yarn dev",
-    "start:be": "cd nest-be && yarn start:dev",
+    "start:be": "cd backend && yarn start:dev",
+    "tables": "cd backend && yarn npx prisma studio",
     "setup": "concurrently \"yarn setup:fe\" \"yarn setup:be\"",
     "setup:fe": "cd next-fe && yarn",
-    "setup:be": "cd nest-be && yarn"
+    "setup:be": "cd backend && yarn"
   },
   "keywords": [],
   "author": "",
