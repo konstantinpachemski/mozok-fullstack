@@ -9,7 +9,7 @@
     "tables": "cd backend && yarn npx prisma studio",
     "setup": "concurrently \"yarn\" \"yarn setup:fe\" \"yarn setup:be\"",
     "setup:fe": "cd frontend && yarn",
-    "setup:be": "cd backend && yarn"
+    "setup:be": "cd backend && yarn && yarn prisma generate"
   },
   "keywords": [],
   "author": "",
