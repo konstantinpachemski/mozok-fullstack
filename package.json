@@ -6,7 +6,7 @@
     "start": "concurrently \"yarn start:fe\" \"yarn start:be\"",
     "start:fe": "cd frontend && yarn dev",
     "start:be": "cd backend && yarn start:dev",
-    "tables": "cd backend && yarn npx prisma studio",
+    "tables": "cd backend && yarn prisma studio",
     "setup": "concurrently \"yarn\" \"yarn setup:fe\" \"yarn setup:be\"",
     "setup:fe": "cd frontend && yarn",
     "setup:be": "cd backend && yarn && yarn prisma generate"
