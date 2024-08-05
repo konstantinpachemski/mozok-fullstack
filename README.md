@@ -8,8 +8,8 @@ Below are the steps to set up and run the project locally.
 
 ```plaintext
 mozok-fullstack/
-├── next-fe/    # Frontend (Next.js)
-├── nest-be/    # Backend (Nest.js)
+├── frontend/    # Frontend (Next.js)
+├── backend/    # Backend (Nest.js)
 └── package.json
 ```
 ## Prerequisites
@@ -38,30 +38,22 @@ $ yarn setup:fe
 $ yarn setup:be
 ```
 
-Next, edit the connection with the database:
+Next, create ```.env``` file in root of backend folder and edit the connection with the database, JWT_SECRET and JWT_REFRESH_TOKEN:
 
-_/nest-be/src/typeorm.config.ts_
+_/backend/.env_
 ```plaintext
-export const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  password: 'admin123', <-- this
-  username: 'postgres',
-  entities: [User],
-  database: 'pgnestdb', <-- and most likely this
-  synchronize: true,
-  logging: true,
-};
-```
-
-Finaly, create ```.env``` file in root of nest-be and store your ```JWT_SECRET```: (there's ```.env-example```)
-
-_/nest-be/.env_
-```plaintext
+DATABASE_URL="postgresql://postgres:admin123@localhost:5432/postgres?schema=public"
 JWT_SECRET=
+JWT_REFRESH_TOKEN=
 ```
 
+Finally, create ```.env``` file in root of frontend folder and provide the same JWT_SECRET:
+
+_/frontend/.env_
+```plaintext
+NEXTAUTH_URL=http://localhost:3000/
+NEXTAUTH_SECRET=
+```
 
 ### 3. Running the Project
 ```plaintext
@@ -75,7 +67,7 @@ $ cd nest-be && yarn start:dev
 
 ### 4. Accessing the Application
 - Frontend: Open your browser and navigate to ```http://localhost:3000```
-- Backend: The backend server will run on ```http://localhost:3001``` (or the port specified in your Nest.js configuration)
+- Backend: The backend server will run on ```http://localhost:8000``` (or the port specified in your Nest.js configuration)
 
 ### 5. Scripts
 Here are some additional scripts you might find useful:
@@ -87,5 +79,7 @@ Here are some additional scripts you might find useful:
 ```$ yarn lint``` - Lint the codebase
 
 #### Backend (Nest.js):
-  
+
+```$ yarn tables``` - Run Prisma Studio and preview database tables
+
 ```$ yarn lint``` - Lint the codebase
