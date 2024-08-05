@@ -45,6 +45,7 @@ export default function SignupForm() {
     setPending(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     try {
+      //TODO: Fix this fetch call
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
