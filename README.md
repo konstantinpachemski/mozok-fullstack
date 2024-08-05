@@ -8,7 +8,7 @@ Below are the steps to set up and run the project locally.
 
 ```plaintext
 mozok-fullstack/
-├── frontend/    # Frontend (Next.js)
+├── frontend/   # Frontend (Next.js)
 ├── backend/    # Backend (Nest.js)
 └── package.json
 ```
