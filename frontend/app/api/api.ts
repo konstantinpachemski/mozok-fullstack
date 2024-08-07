@@ -30,7 +30,7 @@ api.interceptors.response.use(
           if (res.data.accessToken) {
             originalRequest.headers[
               "Authorization"
-            ] = `Bearer ${res.data.accessToken}`;
+            ] = `Refresh ${res.data.accessToken}`;
             return api(originalRequest);
           }
         } catch (refreshError) {

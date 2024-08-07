@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
-export const signinFormSchema = object({
+export const userFormSchema = object({
   email: string().email().required("Email is required."),
   password: string()
     .min(8, { message: "Password must be at least 8 characters." })

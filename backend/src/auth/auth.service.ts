@@ -27,12 +27,12 @@ export class AuthService {
       user,
       backendTokens: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '20s',
+          expiresIn: '1h',
           secret: process.env.JWT_SECRET,
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
           expiresIn: '7d',
-          secret: process.env.JWT_REFRESH_TOKEN,
+          secret: process.env.JWT_REFRESH,
         }),
         expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
       },
@@ -51,18 +51,17 @@ export class AuthService {
 
   async refreshToken(user: any) {
     const payload = {
-      username: user.username,
-      sub: user.sub,
+      username: user.email,
     };
 
     return {
       accessToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '20s',
-        secret: process.env.jwtSecretKey,
+        expiresIn: '1h',
+        secret: process.env.JWT_SECRET,
       }),
       refreshToken: await this.jwtService.signAsync(payload, {
         expiresIn: '7d',
-        secret: process.env.jwtRefreshTokenKey,
+        secret: process.env.JWT_REFRESH,
       }),
       expiresIn: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
