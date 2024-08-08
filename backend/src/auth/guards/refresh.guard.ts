@@ -15,6 +15,8 @@ export class RefreshJwtGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
+    console.log('token', request.headers);
+
     if (!token) throw new UnauthorizedException('Missing token');
 
     try {
