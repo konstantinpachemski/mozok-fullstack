@@ -1,4 +1,4 @@
-# Nextjs + Nestjs TypeScript TypeORM JWT PostgreSQL Project
+# Nextjs + Nestjs TypeScript TypeORM PostgreSQL Project
 
 This is a fullstack project that uses `Next.js` for the frontend and `Nest.js` for the backend.
 
