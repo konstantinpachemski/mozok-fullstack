@@ -51,17 +51,14 @@ _/backend/.env_
 
 ```plaintext
 DATABASE_URL="postgresql://postgres:admin123@localhost:5432/postgres?schema=public"
-JWT_SECRET=
-JWT_REFRESH=
 ```
 
-Finally, create `.env` file in root of frontend folder and provide the same JWT_SECRET:
+Finally, create `.env` file in root of frontend folder:
 
 _/frontend/.env_
 
 ```plaintext
 NEXTAUTH_URL=http://localhost:3000/
-NEXTAUTH_SECRET=
 ```
 
 ### 3. Running the Project
